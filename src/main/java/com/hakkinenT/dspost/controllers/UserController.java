@@ -1,5 +1,6 @@
 package com.hakkinenT.dspost.controllers;
 
+import com.hakkinenT.dspost.models.dto.PostDTO;
 import com.hakkinenT.dspost.models.dto.UserDTO;
 import com.hakkinenT.dspost.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,5 +53,12 @@ public class UserController {
     public ResponseEntity<Void> delete(@PathVariable String id){
         userService.delete(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/{id}/posts")
+    public ResponseEntity<List<PostDTO>> getUserPosts(@PathVariable String id){
+        List<PostDTO> posts = userService.getUserPosts(id);
+
+        return ResponseEntity.ok(posts);
     }
 }

@@ -1,6 +1,8 @@
 package com.hakkinenT.dspost.services;
 
+import com.hakkinenT.dspost.models.dto.PostDTO;
 import com.hakkinenT.dspost.models.dto.UserDTO;
+import com.hakkinenT.dspost.models.entities.Post;
 import com.hakkinenT.dspost.models.entities.User;
 import com.hakkinenT.dspost.repositories.UserRepository;
 import com.hakkinenT.dspost.services.exceptions.ResourceNotFoundException;
@@ -56,5 +58,10 @@ public class UserService {
     public void delete(String id){
         getEntityById(id);
         userRepository.deleteById(id);
+    }
+
+    public List<PostDTO> getUserPosts(String id){
+        User user = getEntityById(id);
+        return user.getPosts().stream().map(PostDTO::new).toList();
     }
 }

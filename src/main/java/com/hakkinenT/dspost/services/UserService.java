@@ -25,4 +25,18 @@ public class UserService {
                 .orElseThrow(() -> new ResourceNotFoundException("Objeto não encontrado!"));
         return new UserDTO(user);
     }
+
+    public UserDTO insert(UserDTO dto){
+        User user = new User();
+        copyDTOToEntity(dto, user);
+
+        user = userRepository.insert(user);
+
+        return new UserDTO(user);
+    }
+
+    private void copyDTOToEntity(UserDTO dto, User user){
+        user.setName(dto.getName());
+        user.setEmail(dto.getEmail());
+    }
 }

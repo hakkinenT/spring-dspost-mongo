@@ -8,6 +8,8 @@ import com.hakkinenT.dspost.services.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class PostService {
     @Autowired
@@ -21,5 +23,10 @@ public class PostService {
     private Post getEntityById(String id){
         return postRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Objeto não encontrado!"));
+    }
+
+    public List<PostDTO> findByTitle(String text){
+        List<Post> list = postRepository.findByTitleContainingIgnoreCase(text);
+        return list.stream().map(PostDTO::new).toList();
     }
 }

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.Instant;
 import java.util.List;
 
 @RestController
@@ -25,6 +26,16 @@ public class PostController {
             @RequestParam(value = "text", defaultValue = "") String text){
 
         List<PostDTO> posts = postService.findByTitle(text);
+        return ResponseEntity.ok(posts);
+    }
+
+    @GetMapping("/fullsearch")
+    public ResponseEntity<List<PostDTO>> fullSearch(
+            @RequestParam(value = "text", defaultValue = "") String text,
+            @RequestParam(value = "start", defaultValue = "") String start,
+            @RequestParam(value = "end", defaultValue = "") String end){
+
+        List<PostDTO> posts = postService.fullSearch(text, start, end);
         return ResponseEntity.ok(posts);
     }
 }
